@@ -52,12 +52,15 @@ First file: 'asset_vars.py' this contains the variable definitions; this is impo
   <li>You don't want to have pw's in the files up in a public repo (git) so I created exec 'changePw.py', 
       run it like './changePw.py all set' to set the pw or './changePw.py all clear' to clear the pw.
       You can also run it for one file ('i.e. ./changePw.py asset set'), look at code for the names of
-      the respective keys to use.</li>
+      the respective keys to use.<br/>
+      <strong>Note:</strong> I didn't put the changePw.py file here but take a look at changePw.sample,
+      it's the code without the actual pw's... change the 'realPw' value to be the pw for the
+      associated data source</li>
 </ul>
 
 <h3>Test drive</h3>
 <ul>
-  <li>Pretend you want to create the shell/properties file so you can run 'sj_Assets' job; you'd do><pre>
+  <li>Pretend you want to create the shell/properties file so you can run 'sj_Assets' job; you'd do:<pre>
      ./makeJob.sh asset_vars</pre>
       Note you don't suffix the file with .py
       When you execute this it'll create 'runDataStageJobs.sh' and 'sj_Assets_program.properties', if you
