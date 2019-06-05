@@ -61,6 +61,7 @@ def addJobToScript(scriptFileHandle, jobProperties):
   scriptFileHandle.write("exitRC=$?\n")
   scriptFileHandle.write('echo "' + jobProperties + ' $exitRC"\n')
   scriptFileHandle.write("if [[ $exitRC -gt 2 ]]; then exit $exitRC; fi\n")
+  scriptFileHandle.write("cd $directoryName\n")
 
 # split parm into name/value pairs
 def splitParm(string2Split):
