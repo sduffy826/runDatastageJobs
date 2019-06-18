@@ -56,12 +56,11 @@ def deleteIfFileExists(file2Check):
 
 # Add job to script 
 def addJobToScript(scriptFileHandle, jobProperties):
-  scriptFileHandle.write('echo "Time: $(date)"\n')
+  scriptFileHandle.write('echo "Time: $(date)   directoryName:$directoryName  currentDirectory:$PWD"\n')
   scriptFileHandle.write("bash ./execute_dstagejob.sh -start $directoryName/" + jobProperties + "\n")
   scriptFileHandle.write("exitRC=$?\n")
   scriptFileHandle.write('echo "' + jobProperties + ' $exitRC"\n')
   scriptFileHandle.write("if [[ $exitRC -gt 2 ]]; then exit $exitRC; fi\n")
-  scriptFileHandle.write("cd $directoryName\n")
 
 # split parm into name/value pairs
 def splitParm(string2Split):
@@ -87,8 +86,8 @@ scriptHandle = open(script2Create,"a")  # Append (will create if file doesn't ex
 
 if (appendMode == False):
   scriptHandle.write("#!/bin/bash\n")
+  scriptHandle.write("directoryName=`dirname $(readlink -f $0)`\n")
 
-scriptHandle.write("directoryName=`dirname $(readlink -f $0)`\n")
 scriptHandle.write("# Go to project directory\n")
 scriptHandle.write("cd /opt/IBM/InformationServer/Server/Projects/" + datastageproj + "\n")
 scriptHandle.write("# Execute script and specify properties file to use\n")
@@ -133,6 +132,9 @@ for aJob in jobs2Run:
 
   # Add this to the script
   addJobToScript(scriptHandle,outputFile)
+
+# Return to directory
+scriptHandle.write("cd $directoryName\n")
 
 # All done, close script
 scriptHandle.close()
